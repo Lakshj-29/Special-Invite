@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Surprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff85a2;
+            --dark-pink: #ff4d6d;
+            --indigo: #002e94;
+            --scapia: #ff6b35;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ffe5ec;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--dark-pink);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            min-height: 150px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            width: 200px;
+        }
+
+        #yesBtn { background: var(--pink); color: white; box-shadow: 0 4px 15px rgba(255, 133, 162, 0.4); }
+        #noBtn { background: #cbd5e0; color: #4a5568; }
+
+        /* --- Success Screen --- */
+        #success-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffe5ec;
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        /* --- CSS Flight Ticket Design --- */
+        .ticket-box {
+            width: 100%;
+            max-width: 360px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid #eee;
+        }
+
+        .ticket-header {
+            background: var(--indigo);
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .ticket-body { padding: 15px; }
+
+        .route {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .code { font-size: 12px; color: #94a3b8; font-weight: bold; }
+        .city { font-size: 18px; font-weight: 700; color: #1e293b; }
+        .time-box { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-weight: 700; }
+
+        .line-container {
+            flex-grow: 1;
+            margin: 0 10px;
+            position: relative;
+            height: 2px;
+            background: #e2e8f0;
+            display: flex;
+            justify-content: center;
+        }
+        .duration {
+            position: absolute;
+            top: -22px;
+            font-size: 11px;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: #64748b;
+        }
+
+        .ticket-footer {
+            border-top: 1px dashed #e2e8f0;
+            padding: 12px 15px;
+            font-size: 12px;
+            background: #fafafa;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .scapia-logo { color: var(--scapia); font-weight: bold; }
+
+        .heart {
+            position: absolute; color: var(--pink); animation: float 4s linear infinite;
+            z-index: 101;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(1); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainCard">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWp4eGZicGZicGZicGZicGZicGZicGZicGZicGZicGZicGZpYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/vVzH2XY3m0E9NDL23E/giphy.gif" width="150">
+        <h1>Will you go on a date with me?</h1>
+        <div class="btn-group">
+            <button id="yesBtn">Yes! ❤️</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div id="success-overlay">
+        <img src="https://media.giphy.com/media/T86cl8N597L9Lp5hN1/giphy.gif" width="120" style="margin-top:20px">
+        <h1 style="font-size: 1.8rem; margin: 10px 0;">Pack your bags! 🥰</h1>
+        
+        <!-- Flight 1 -->
+        <div class="ticket-box">
+            <div class="ticket-header">
+                <span>✈️ 6E875</span>
+                <span>PNR: C66KWF</span>
+            </div>
+            <div class="ticket-body">
+                <div class="route"><span class="code">HYD</span><span class="code">CCJ</span></div>
+                <div class="route">
+                    <span class="city">Hyderabad</span>
+                    <div class="line-container"><span class="duration">01h 30m</span></div>
+                    <span class="city">Calicut</span>
+                </div>
+                <div class="route" style="margin-top:10px">
+                    <span class="time-box">11:00</span>
+                    <span class="time-box">12:30</span>
+                </div>
+                <div style="font-size: 12px; color: #64748b; margin-top:5px">27th Jun, 2026</div>
+            </div>
+            <div class="ticket-footer">
+                <span>Booked on <span class="scapia-logo">scapia</span></span>
+            </div>
+        </div>
+
+        <!-- Flight 2 -->
+        <div class="ticket-box">
+            <div class="ticket-header">
+                <span>✈️ 6E876</span>
+                <span>PNR: IDHTSA</span>
+            </div>
+            <div class="ticket-body">
+                <div class="route"><span class="code">CCJ</span><span class="code">HYD</span></div>
+                <div class="route">
+                    <span class="city">Calicut</span>
+                    <div class="line-container"><span class="duration">01h 25m</span></div>
+                    <span class="city">Hyderabad</span>
+                </div>
+                <div class="route" style="margin-top:10px">
+                    <span class="time-box">10:20</span>
+                    <span class="time-box">11:45</span>
+                </div>
+                <div style="font-size: 12px; color: #64748b; margin-top:5px">29th Jun, 2026</div>
+            </div>
+            <div class="ticket-footer">
+                <span>Booked on <span class="scapia-logo">scapia</span></span>
+            </div>
+        </div>
+
+        <p style="font-weight:bold; color: #475569; margin-bottom: 40px;">Passenger: Mauli Rawat (F, 27)</p>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const overlay = document.getElementById('success-overlay');
+        
+        let count = 0;
+        const texts = ["No", "Please?", "Pretty please?", "Think again? 🥺", "Don't do this..."];
+
+        noBtn.addEventListener('click', () => {
+            count++;
+            if (count < texts.length) {
+                noBtn.innerText = texts[count];
+                noBtn.style.transform = `scale(${1 - count * 0.15})`;
+                yesBtn.style.transform = `scale(${1 + count * 0.2})`;
+            }
+        });
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+
+        function moveButton() {
+            if (count >= texts.length - 1) {
+                const x = Math.random() * (window.innerWidth - 150);
+                const y = Math.random() * (window.innerHeight - 50);
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = x + 'px';
+                noBtn.style.top = y + 'px';
+            }
+        }
+
+        yesBtn.addEventListener('click', () => {
+            overlay.style.display = 'flex';
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }, 200);
+        });
+    </script>
+</body>
+</html>
