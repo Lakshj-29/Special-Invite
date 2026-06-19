@@ -37,6 +37,27 @@
             z-index: 10;
         }
 
+        /* GIF Styling with Fallback */
+        .image-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-gif {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        .heart-fallback {
+            font-size: 80px;
+            display: none; /* Hidden unless image fails */
+        }
+
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--dark-pink);
@@ -50,7 +71,7 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            margin-top: 30px;
+            margin-top: 10px;
             min-height: 150px;
         }
 
@@ -82,7 +103,6 @@
             text-align: center;
         }
 
-        /* --- CSS Flight Ticket Design --- */
         .ticket-box {
             width: 100%;
             max-width: 360px;
@@ -107,45 +127,24 @@
 
         .ticket-body { padding: 15px; }
 
-        .route {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
+        .route { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .code { font-size: 12px; color: #94a3b8; font-weight: bold; }
         .city { font-size: 18px; font-weight: 700; color: #1e293b; }
         .time-box { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-weight: 700; }
 
         .line-container {
-            flex-grow: 1;
-            margin: 0 10px;
-            position: relative;
-            height: 2px;
-            background: #e2e8f0;
-            display: flex;
-            justify-content: center;
+            flex-grow: 1; margin: 0 10px; position: relative;
+            height: 2px; background: #e2e8f0; display: flex; justify-content: center;
         }
         .duration {
-            position: absolute;
-            top: -22px;
-            font-size: 11px;
-            background: #f1f5f9;
-            padding: 2px 8px;
-            border-radius: 10px;
-            color: #64748b;
+            position: absolute; top: -22px; font-size: 11px;
+            background: #f1f5f9; padding: 2px 8px; border-radius: 10px; color: #64748b;
         }
 
         .ticket-footer {
-            border-top: 1px dashed #e2e8f0;
-            padding: 12px 15px;
-            font-size: 12px;
-            background: #fafafa;
-            display: flex;
-            justify-content: space-between;
+            border-top: 1px dashed #e2e8f0; padding: 12px 15px; font-size: 12px;
+            background: #fafafa; display: flex; justify-content: space-between;
         }
-
         .scapia-logo { color: var(--scapia); font-weight: bold; }
 
         .heart {
@@ -161,7 +160,14 @@
 <body>
 
     <div class="container" id="mainCard">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWp4eGZicGZicGZicGZicGZicGZicGZicGZicGZicGZicGZpYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/vVzH2XY3m0E9NDL23E/giphy.gif" width="150">
+        <div class="image-container">
+            <!-- Points to the bear.gif you upload to GitHub -->
+            <img src="bear.gif" id="mainGif" class="main-gif" 
+                 onerror="this.style.display='none'; document.getElementById('fallback').style.display='block';">
+            <!-- This heart shows if the image fails -->
+            <div id="fallback" class="heart-fallback">❤️</div>
+        </div>
+        
         <h1>Will you go on a date with me?</h1>
         <div class="btn-group">
             <button id="yesBtn">Yes! ❤️</button>
@@ -170,7 +176,9 @@
     </div>
 
     <div id="success-overlay">
-        <img src="https://media.giphy.com/media/T86cl8N597L9Lp5hN1/giphy.gif" width="120" style="margin-top:20px">
+        <div class="image-container" style="margin-top:20px">
+            <img src="bear.gif" class="main-gif">
+        </div>
         <h1 style="font-size: 1.8rem; margin: 10px 0;">Pack your bags! 🥰</h1>
         
         <!-- Flight 1 -->
@@ -241,10 +249,7 @@
             }
         });
 
-        noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', moveButton);
-
-        function moveButton() {
+        const moveButton = () => {
             if (count >= texts.length - 1) {
                 const x = Math.random() * (window.innerWidth - 150);
                 const y = Math.random() * (window.innerHeight - 50);
@@ -252,7 +257,10 @@
                 noBtn.style.left = x + 'px';
                 noBtn.style.top = y + 'px';
             }
-        }
+        };
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
 
         yesBtn.addEventListener('click', () => {
             overlay.style.display = 'flex';
